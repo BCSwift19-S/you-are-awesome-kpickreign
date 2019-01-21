@@ -46,7 +46,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="awesomeLabel" destination="IHb-4p-J40" id="ezz-Si-rTi"/>
+                        <outlet property="messageLabel" destination="IHb-4p-J40" id="ezz-Si-rTi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
