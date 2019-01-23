@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var messageLabel: UILabel!
+    var index = 0
    
     
     // Code below executes when the app's view first loads
@@ -21,17 +22,35 @@ class ViewController: UIViewController {
     }
 
     @IBAction func showMessagePressed(_ sender: UIButton) {
-        let message1 = "You da bomb!"
-        let message2 = "You are great!"
-        let message3 = "You are amazing!"
+        let messages = ["You are awesome",
+                        "you are great",
+                        "you are fantastic",
+                        "Genius bar",
+                        "brighten",
+                        "you are da bomb",
+                        "hey fabulous",
+                        "you are tremendous",
+                        "Jony Ive",
+                        "apps!"]
         
-        if messageLabel.text == message1 {
-            messageLabel.text = message2
-        } else if messageLabel.text == message2 {
-            messageLabel.text = message3
+        messageLabel.text = messages[index]
+        
+        if index == messages.count - 1{
+            index = 0
         } else {
-            messageLabel.text = message1
+            index = index + 1
         }
+//        let message1 = "You da bomb!"
+//        let message2 = "You are great!"
+//        let message3 = "You are amazing!"
+//
+//        if messageLabel.text == message1 {
+//            messageLabel.text = message2
+//        } else if messageLabel.text == message2 {
+//            messageLabel.text = message3
+//        } else {
+//            messageLabel.text = message1
+//        }
         
     }
  
