@@ -65,7 +65,7 @@ class ViewController: UIViewController {
             newIndex = Int.random(in: 0..<numberOfSounds)
         } while soundIndex == newIndex
         
-        imageIndex = newIndex
+        soundIndex = newIndex
         
         //play a sound
         var soundName = "sound\(soundIndex)"
