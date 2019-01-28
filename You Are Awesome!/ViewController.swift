@@ -12,7 +12,10 @@ import AVFoundation
 class ViewController: UIViewController {
 
     @IBOutlet weak var messageLabel: UILabel!
+   
     @IBOutlet weak var awesomeImageView: UIImageView!
+    @IBOutlet weak var soundSwitch: UISwitch!
+    
     var awesomePlayer = AVAudioPlayer()
     var index = -1
     var imageIndex = -1
@@ -24,15 +27,41 @@ class ViewController: UIViewController {
     // Code below executes when the app's view first loads
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-  
-        func playSound () {
-            
-        }
-        
-        
     }
-
+    
+    func nonRepeatingRandomNumber(lastNumber: Int, maxValue: Int) -> Int {
+        var newIndex: Int // declares but doesnt initialize newIndex
+        repeat{
+            newIndex = Int.random(in: 0..<maxValue)
+        } while lastNumber == newIndex
+            return newIndex
+    }
+  
+    func playSound (soundName: String, audioPlayer: inout AVAudioPlayer) {
+            // can we load in the file soundName?
+            if let sound = NSDataAsset(name: soundName){
+                //check if sound.data is a sound file
+                do {
+                    try audioPlayer = AVAudioPlayer(data: sound.data)
+                    audioPlayer.play()
+                } catch{
+                    // if sound.data is not a valid audio file
+                    print("ERROR: data in \(soundName) could not be played as a sound")
+                }
+            }else{
+                
+                //if reading in tha NSDataAsset didnt work tell the developer/report the error
+                print("ERROR: file \(soundName) didn't load")
+            }
+    }
+        
+        
+    @IBAction func soundSwitchPressed(_ sender: UISwitch) {
+        if soundSwitch.isOn == false && soundIndex != -1{
+            awesomePlayer.stop()
+        }
+    }
+    
     @IBAction func showMessagePressed(_ sender: UIButton) {
         let messages = ["You are awesome",
                         "you are great",
@@ -47,48 +76,40 @@ class ViewController: UIViewController {
         
 //        var newIndex = -1
         
-        var newIndex: Int // declares but doesnt initialize newIndex
+      
         
         //show a message
-        repeat{
-            newIndex = Int.random(in: 0..<messages.count)
-        } while index == newIndex
-        
-        index = newIndex
+        index = nonRepeatingRandomNumber(lastNumber: index, maxValue: messages.count)
+//        repeat{
+//            newIndex = Int.random(in: 0..<messages.count)
+//        } while index == newIndex
+//        index = newIndex
         messageLabel.text = messages[index]
         
         //Show an image
-        repeat{
-            newIndex = Int.random(in: 0..<numberOfImages)
-        } while imageIndex == newIndex
-        
-        imageIndex = newIndex
+        imageIndex = nonRepeatingRandomNumber(lastNumber: imageIndex, maxValue: numberOfImages)
+//        repeat{
+//            newIndex = Int.random(in: 0..<numberOfImages)
+//        } while imageIndex == newIndex
+//        imageIndex = newIndex
         awesomeImageView.image = UIImage(named: "image\(imageIndex)")
         
-      //  get a random number to use in our soundName file
-        repeat{
-            newIndex = Int.random(in: 0..<numberOfSounds)
-        } while soundIndex == newIndex
-        
-        soundIndex = newIndex
-        
-        //play a sound
-        var soundName = "sound\(soundIndex)"
-        // can we load in the file soundName?
-        if let sound = NSDataAsset(name: soundName){
-           //check if sound.data is a sound file
-            do {
-            try awesomePlayer = AVAudioPlayer(data: sound.data)
-                awesomePlayer.play()
-            } catch{
-                // if sound.data is not a valid audio file
-                print("ERROR: data in \(soundName) could not be played as a sound")
-            }
-        }else{
+
+//        if soundSwitch.isOn == true {
+        if soundSwitch.isOn {
+            //  get a random number to use in our soundName file
+            soundIndex = nonRepeatingRandomNumber(lastNumber: soundIndex, maxValue: numberOfSounds)
+            //        repeat{
+            //            newIndex = Int.random(in: 0..<numberOfSounds)
+            //        } while soundIndex == newIndex
+            //        soundIndex = newIndex
             
-            //if reading in tha NSDataAsset didnt work tell the developer/report the error
-            print("ERROR: file \(soundName) didn't load")
+            //play a sound
+            let soundName = "sound\(soundIndex)"
+            playSound(soundName: soundName, audioPlayer: &awesomePlayer)
         }
+        
+       
         
         
         
